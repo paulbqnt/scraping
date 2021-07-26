@@ -1,4 +1,4 @@
-# Euronext
+# Euronext scraping
 
 The purpose of this project is to obtain as much information as possible on the Euronext IPOs (The ipo data contains many duplicates and errors)
 
