@@ -10,11 +10,13 @@ headers = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KH
 company_names, agents, symbols, isin_codes, LEI_codes, exchange_markets, trading_locations, ICBs, websites, ipo_dates, ipo_prices, ipo_types, compartiments, operations_des, instruments_names, products_families,capitals_raised = ([] for i in range(17))
 
 urls_df = pd.read_csv("urls.csv", sep = ",")
-urls_df.columns = ["number", "url"]
+urls_df.columns = ["url"]
 
 urls_df["url"] = "https://live.euronext.com/" + urls_df["url"].astype(str) 
 
 urls = urls_df["url"].tolist()
+
+urls.reverse()
 
 nb = 0
 
@@ -128,9 +130,10 @@ for i in urls:
     capitals_raised.append(capital_raised)
     #sleep(randint(1,2))
     nb = nb + 1
-    print("step ", nb, " on  more than 2000")
+    print(round(((nb/len(urls))*100),2), "%")
     df = pd.DataFrame(list(zip(company_names, symbols ,ipo_dates, isin_codes, ICBs, ipo_prices, LEI_codes, exchange_markets, agents, trading_locations, websites, ipo_types, compartiments, operations_des, instruments_names, products_families, capitals_raised)),
                columns =['Company Name', 'Symbol', "Date", "isin", "ICB", "price","LEI","Exchange","Agent","location","website","ipo type","compartiment", "operation description","instrument"," product family","capital raised"])
-    df.to_csv("ipo_df.csv")
+    df.to_excel("df_ipos_raw.xlsx", engine='xlsxwriter')
 
-df.to_csv("ipo_df.csv")
+df.to_excel("df_ipos_raw.xlsx", engine='xlsxwriter')
+
